@@ -25,15 +25,21 @@ export const removeFromFavorites = (dishId) => ({
 const favoriteReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_FAVORITES:
-      return {
-        ...state,
-        favoriteDishes: [...state.favoriteDishes, action.payload],
-      };
+      // Only add the dish if it isn't already in the favorites
+      if (!state.favoriteDishes.find(dish => dish.id === action.payload.id)) {
+        return {
+          ...state,
+          favoriteDishes: [...state.favoriteDishes, action.payload],
+        };
+      }
+      return state;  // Return the state unchanged if the dish is already in favorites
+
     case REMOVE_FROM_FAVORITES:
       return {
         ...state,
         favoriteDishes: state.favoriteDishes.filter(dish => dish.id !== action.payload),
       };
+
     default:
       return state;
   }

@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';  // Heart icon from vector icons library
-import { useDispatch } from 'react-redux';
-import { addToFavorites } from '../utils/store'; // Import the action creator 
+import { useDispatch, useSelector } from 'react-redux';
+import { addToFavorites, removeFromFavorites } from '../utils/store'; // Import both add and remove actions
 
 const dishes = {
   '1': [
@@ -21,17 +21,39 @@ const MenuDetailScreen = () => {
   const { categoryId } = route.params;
   const categoryDishes = dishes[categoryId];
 
-  const dispatch = useDispatch(); // Get dispatch from redux
+  const dispatch = useDispatch();
+  const favoriteDishes = useSelector((state) => state.favoriteDishes);  // Access favorite dishes from Redux
+
+  // Check if a dish is already favorited
+  const isDishFavorited = (dishId) => {
+    return favoriteDishes.some((dish) => dish.id === dishId);
+  };
+
+  // Handle the toggle functionality for favoriting/unfavoriting
+  const toggleFavorite = (item) => {
+    if (isDishFavorited(item.id)) {
+      // If the dish is already favorited, remove it
+      dispatch(removeFromFavorites(item.id));
+    } else {
+      // If the dish is not favorited, add it
+      dispatch(addToFavorites(item));
+    }
+  };
 
   const renderDishItem = ({ item }) => (
     <View style={styles.dishItem}>
       <Image source={item.image} style={styles.dishImage} />
       <Text style={styles.dishName}>{item.name}</Text>
       <TouchableOpacity
-        onPress={() => dispatch(addToFavorites(item))}  // Add dish to favorites
+        onPress={() => toggleFavorite(item)}  // Toggle favorite state on press
         style={styles.heartIcon}
       >
-        <AntDesign name="hearto" size={24} color="red" />
+        {/* Conditionally render filled or unfilled heart icon */}
+        <AntDesign
+          name={isDishFavorited(item.id) ? 'heart' : 'hearto'}  // 'heart' for filled, 'hearto' for outline
+          size={24}
+          color="red"
+        />
       </TouchableOpacity>
     </View>
   );
