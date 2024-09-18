@@ -83,7 +83,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   heartIcon: {
-    padding: 10,
+    padding: 5,
+    alignItems: 'center',
+    flexDirection: "row"
   },
 });
 

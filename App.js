@@ -28,12 +28,12 @@ function StackNavigator() {
         name="MenuDetail"
         component={MenuDetailScreen}
         options={({ route }) => ({
-          title: `Menu for ${route.params.categoryId}`, // Dynamic title based on category selected
-          headerRight: () => (
-            <TouchableOpacity onPress={() => alert('Marked as favorite')}>
-              <Text style={{ marginRight: 10, color: 'blue' }}>Favorite</Text>
-            </TouchableOpacity>
-          ),
+          title: `Menu ${route.params.categoryId}`, // Dynamic title based on category selected
+          // headerRight: () => (
+          //   <TouchableOpacity onPress={() => alert('Marked as favorite')}>
+          //     <Text style={{ marginRight: 10, color: 'blue' }}>Favorite</Text>
+          //   </TouchableOpacity>
+          // ),
         })}
       />
     </Stack.Navigator>
@@ -47,7 +47,7 @@ function TabNavigator() {
         tabBarIcon: ({ color, size }) => {
           let iconName;
           if (route.name === 'Categories') {
-            iconName = 'list-outline';
+            iconName = 'list-circle-outline';
           } else if (route.name === 'Favorites') {
             iconName = 'heart-outline';
           } else if (route.name === 'Settings') {
@@ -55,9 +55,10 @@ function TabNavigator() {
           }
           return <Icon name={iconName} size={size} color={color} />;
         },
+        headerShown: false,
       })}
     >
-      <Tab.Screen name="Categories" component={StackNavigator} />
+      <Tab.Screen name="Categories" component={StackNavigator}/>
       <Tab.Screen name="Favorites" component={FavoritesScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
