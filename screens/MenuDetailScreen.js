@@ -11,8 +11,8 @@ const dishes = {
     { id: '2', name: 'Pasta', image: require('../assets/pasta.png') },
   ],
   '2': [
-    { id: '1', name: 'Dumplings', image: require('../assets/dumplings.png') },
-    { id: '2', name: 'Fried Rice', image: require('../assets/friedrice.png') },
+    { id: '3', name: 'Dumplings', image: require('../assets/dumplings.png') },
+    { id: '4', name: 'Fried Rice', image: require('../assets/friedrice.png') },
   ],
 };
 
@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
   heartIcon: {
     padding: 5,
     alignItems: 'center',
-    flexDirection: "row"
+    flexDirection: "row",
+    
   },
 });
 
